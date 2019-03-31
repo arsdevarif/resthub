@@ -14,8 +14,18 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb+srv://arsdev:<Wellcom3>@arsdevdb-hpvyx.mongodb.net/test?retryWrites=latihan');
-var db = mongoose.connection;
+//mongoose.connect('mongodb+srv://arsdev:<Wellcom3>@arsdevdb-hpvyx.mongodb.net/test?retryWrites=latihan');
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://arsdev:<password>@arsdevdb-hpvyx.mongodb.net/latihan?retryWrites=true";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("latihan").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+var MongoClient = mongoose.connection;
 // Setup server port
 var port = process.env.PORT || 8080;
 // Send message for default URL
