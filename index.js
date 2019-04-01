@@ -22,10 +22,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("arsdevdb").collection("latihan");
   // perform actions on the collection object
-  
+  var status = client.db("arsdevdb");
+  console.log(status);
   client.close();
 
- console.log(collection);
+ 
+ 
 });
 
 
@@ -40,3 +42,8 @@ app.use('/api', apiRoutes)
 app.listen(port, function () {
     console.log("Running RestHub on port " + port);
 });
+//set view engines EJS
+app.set("views", path.join(__dirname,"views"));
+app.set('views engine','ejs,');
+//set up public folder
+app.use(express.static(path.join(__dirname,'public')));
