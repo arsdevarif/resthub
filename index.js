@@ -1,5 +1,6 @@
  // Import express
 let express = require('express');
+var path = require('path');//path e
 // Import Body parser
 let bodyParser = require('body-parser');
 // Import Mongoose
@@ -7,7 +8,7 @@ let mongoose = require('mongoose');
 // Initialize the app
 let app = express();
 // Import routes
-let apiRoutes = require("./api-routes")
+let apiRoutes = require('./api-routes')
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: true
@@ -17,33 +18,33 @@ app.use(bodyParser.json());
 //mongoose.connect('mongodb://localhost/resthub');
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://arsdev:<dYvEPlKacyHqERVr>@arsdevdb-hpvyx.mongodb.net/arsdevdb?retryWrites=true";
+const uri = 'mongodb+srv://arsdev:<dYvEPlKacyHqERVr>@arsdevdb-hpvyx.mongodb.net/arsdevdb?retryWrites=true';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
-  const collection = client.db("arsdevdb").collection("latihan");
+  const collection = client.db('arsdevdb').collection('latihan');
   // perform actions on the collection object
-  var status = client.db("arsdevdb");
+  var status = client.db('arsdevdb');
   console.log(status);
-  client.close();
-
- 
- 
+  client.close(); 
 });
 
+//set view engines EJS
+app.set('views', path.join(__dirname,'views'));
+app.set('view engine','ejs');
+//set up public folder
+app.use(express.static(path.join(__dirname,'public')));
 
 //var db = mongoose.connection;
 // Setup server port
 var port = process.env.PORT || 3000;
-// Send message for default URL
-app.get('/', (req, res) => res.send('<h1>some html</1>'));
+ 
+var pages = require('./routes/pages')
+//redirection
+app.use('/',pages);
 // Use Api routes in the App
 app.use('/api', apiRoutes)
 // Launch app to listen to specified port
 app.listen(port, function () {
-    console.log("Running RestHub on port " + port);
+    console.log('Running RestHub on port ' + port);
 });
-//set view engines EJS
-app.set("views", path.join(__dirname,"views"));
-app.set('views engine','ejs,');
-//set up public folder
-app.use(express.static(path.join(__dirname,'public')));
+ 
