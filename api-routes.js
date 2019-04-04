@@ -11,6 +11,7 @@ router.get('/', function (req, res) {
 // Import contact controller
 var contactController = require('./contactController');
 // Contact routes
+
 router.route('/contacts')
     .get(contactController.index)
     .post(contactController.new);
